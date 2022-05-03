@@ -23,6 +23,7 @@
      $(document).ready(function(){
      // Hide displayed paragraphs
      var select=1
+     updateFields();
     //  $(".result").hide();
 
      function generateDC()
@@ -79,15 +80,62 @@
         return mytext
 
     }
+    function generateTW(){
+
+        var projectname=$("#project-name").val();
+        var raffle_duration=$("#raffle-duration").val();
+        var raffle_count=$("#rafflecount").val();
+        var DC_link=$("#dclink").val();
+        var TW_name=$("#twname").val();
+
+        var mytext=`🐻#PhantaBear X #${projectname}
+
+🎁${raffle_count} x ${TW_name} WL Spots
+
+Rules⭐
+💫Follow 🐻@EzekClub
+@PhantaBearClub
+& ${TW_name}
+
+❤ & RT 
+🪄TAG 3 frens🕺👯‍♂
+🎈Join @EzekClub
+Discord
+(🔗:http://discord.gg/Ezekclub)`
+
+        if(DC_link.length>0){   
+            mytext=mytext+`\n&${TW_name} Discord\n(🔗:${DC_link}):`
+        }
+        if(raffle_duration.length>0){   
+            mytext=mytext+`\n\n⏱${raffle_duration} Hours to go!`
+        }
 
 
+// ⏱12 Hours to go!`
+        return mytext;
+    }
 
+    function updateFields(){
+        $(".template-item").hide();
+        show_class="."+$("#templatename").val()+'-item';
+        $(show_class).show();
+
+    }
+     $("#templatename").click(function(){
+        updateFields();
+       
+     });
 
      $("#generate").click(function(){
          var mytext="该模版尚未启用";
         if($("#templatename").val()=='dc-raffle'){
             mytext=generateDC()
         }
+        if($("#templatename").val()=='tw-raffle'){
+            mytext=generateTW()
+        }
+
+
         $("#exampleFormControlTextarea1").text(mytext);
      });
 
@@ -218,42 +266,54 @@
 
         <div id="raffle template">
 
-
-            <label for="project-name">项目名称:</label>
-            <input type="text" class="form-control" id="project-name" name="project-name" placeholder ="项目名称">
-
-
-            <label for="templatename">开始时间(你的本地时间):</label>
-
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' id='mydate' class="form-control" />
-                <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+            <div class="template-item dc-raffle-item tw-raffle-item">
+                <label for="project-name">项目名称:</label>
+                <input type="text" class="form-control" id="project-name" name="project-name" placeholder ="项目名称">
             </div>
 
-
             
-            <label for="templatename">抽奖时长(hr):</label>
-            <input type="text" class="form-control" id="raffle-duration" name="raffle-duration" placeholder ="抽奖时长（小时数）">
+            <div class="template-item dc-raffle-item">
+                <label for="templatename">开始时间(你的本地时间):</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' id='mydate' class="form-control" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
 
+            <div class="template-item dc-raffle-item tw-raffle-item">
+                <label for="templatename">抽奖时长(hr):</label>
+                <input type="text" class="form-control" id="raffle-duration" name="raffle-duration" placeholder ="抽奖时长（小时数）">
+            </div>
+            <div class="template-item dc-raffle-item">
+                <label for="templatename">提交时长 (hr):</label>
+                <input type="text" class="form-control" id="submit-duration" name="submit-duration" placeholder ="提交时长（小时数）">
+            </div> 
 
-            <label for="templatename">提交时长 (hr):</label>
-            <input type="text" class="form-control" id="submit-duration" name="submit-duration" placeholder ="提交时长（小时数）">
+            <div class="template-item dc-raffle-item tw-raffle-item">
+                <label for='rafflecount'>抽奖个数:</label>
+                <br>
+                <input type="text" class="form-control" id="rafflecount" name="rafflecount" placeholder =0>
+            </div>   
 
-        
-            <label for='rafflecount'>抽奖个数:</label>
-            <br>
-            <input type="text" class="form-control" id="rafflecount" name="rafflecount" placeholder =0>
+            <div class="template-item tw-raffle-item">
+                <label for='twlink'>推特用户名 （请包括@）:</label>
+                <br>
+                <input type="text" class="form-control" id="twname" name="twname" placeholder ="对方 Twitter 用户名">
+            </div>
 
-            <label for='dclink'>DC链接:</label>
-            <br>
-            <input type="text" class="form-control" id="dclink" name="dclink" placeholder ="DC链接（可留空）">
+            <div class="template-item dc-raffle-item tw-raffle-item">
+                <label for='dclink'>DC链接:</label>
+                <br>
+                <input type="text" class="form-control" id="dclink" name="dclink" placeholder ="DC链接（可留空）">
+            </div>
 
-            <label for='twlink'>推特链接:</label>
-            <br>
-            <input type="text" class="form-control" id="twlink" name="twlink" placeholder ="Twitter链接（可留空）">
-
+            <div class="template-item dc-raffle-item">
+                <label for='twlink'>推特链接:</label>
+                <br>
+                <input type="text" class="form-control" id="twlink" name="twlink" placeholder ="Twitter链接（可留空）">
+            </div>
         </div>
 
         <button class="hide-btn" id="generate">生成</button>
